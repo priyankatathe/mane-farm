@@ -23,12 +23,16 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
+
   reducer: persistedReducer,
+
+  devTools: import.meta.env.MODE !== "production",
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false })
       .concat(authApi.middleware)
       .concat(contactApi.middleware)
 
 });
+
 
 export const persistor = persistStore(store);
