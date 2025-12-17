@@ -31,53 +31,86 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-lg w-full max-w-md flex flex-col items-center">
-        <h1 className="text-2xl font-bold mb-6 text-center">
-          Mane Farm
-        </h1>
+    <div className="">
+      <div className="min-h-screen flex bg-[#0e2202]">
+        {/* LEFT IMAGE SECTION */}
+        <div className="hidden md:block w-full md:w-1/2">
+          <img
+            src="/farn.avif"
+            alt="Buffelo"
+            className="
+      w-full
+    h-full
+    object-cover
+    "
+          />
+        </div>
 
-        <form onSubmit={handleSubmit} className="w-full space-y-4">
-          <div>
-            <label className="block text-gray-700 mb-1">Contact no</label>
-            <input
-              type="tel"
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
-              placeholder="Enter your Number"
-              maxLength={10}
-              className="w-full px-4 bg-white border text-black border-gray-500 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              className="w-full px-4 py-2 bg-white border text-black border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-          >
-            {isLoading ? "Logging in..." : "Login"}
-          </button>
-
-          {error && (
-            <p className="text-red-500 text-center mt-2">
-              {error?.data?.message || "Invalid credentials"}
+        {/* RIGHT LOGIN SECTION */}
+        <div className="w-full md:w-1/2 flex items-center justify-center px-6">
+          <div className="w-full max-w-lg text-white">
+            <h1 className="text-5xl font-serif mb-2">Login</h1>
+            <p className="text-xl text-gray-400 mb-10">
+              Welcome back! Please login to your account.
             </p>
-          )}
-        </form>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* CONTACT */}
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-white mb-2">
+                  Contact No
+                </label>
+                <input
+                  type="tel"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  maxLength={10}
+                  placeholder="Enter contact number"
+                  className="w-full bg-transparent border-b border-green-600 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-green-400"
+                />
+              </div>
+
+              {/* PASSWORD */}
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-white mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  className="w-full bg-transparent border-b border-green-600 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-green-400"
+                />
+              </div>
+
+              {/* BUTTON */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full mt-6 bg-gradient-to-r from-[#2D461D] to-[#A9FF67] 
+             text-black font-semibold py-3 rounded-full 
+             transition hover:opacity-90 disabled:opacity-60"
+              >
+                {isLoading ? "Logging in..." : "Login"}
+              </button>
+
+
+              {/* ERROR */}
+              {error && (
+                <p className="text-red-400 text-center text-sm mt-4">
+                  {error?.data?.message || "Invalid credentials"}
+                </p>
+              )}
+            </form>
+
+
+          </div>
+        </div>
       </div>
     </div>
   );
+
 };
 
 export default AdminLogin;
