@@ -63,11 +63,63 @@ const RecentOrdersTable = ({ searchQuery }) => {
     });
   }
 
+  const handleCSVDownload = () => {
+    if (!filteredEnquiries.length) return;
+
+    const headers = [
+      "Contact ID",
+      "Name",
+      "Contact",
+      "Amount",
+      "Email",
+      "Message",
+      "Date",
+    ];
+
+    const rows = filteredEnquiries.map((item) => [
+      `"${item._id.slice(-6)}"`,
+
+      `"${item.name || ""}"`,
+
+      // ✅ CONTACT as TEXT
+      `="${item.contact || ""}"`,
+
+      `="${item.investmentAmount || ""}"`,
+
+      `"${item.email || ""}"`,
+
+      `"${(item.message || "").replace(/"/g, '""')}"`,
+
+      // ✅ DATE as TEXT (DD-MM-YYYY)
+      `"${new Date(item.createdAt)
+        .toLocaleDateString("en-GB")
+        .replace(/\//g, "-")}"`,
+    ]);
+
+
+    const csvContent =
+      headers.join(",") +
+      "\n" +
+      rows.map((row) => row.join(",")).join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Enquiries-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+
+    URL.revokeObjectURL(url);
+  };
+
+
   const recentEnquiries = filteredEnquiries.slice(0, 10);
 
   return (
     <div className="px-3">
-      <div className="text-end p-2">
+      <div className="text-end p-2 flex justify-end gap-3 items-center">
+        {/* FILTER */}
         <div className="relative inline-block">
           <select
             value={filterBy}
@@ -85,11 +137,22 @@ const RecentOrdersTable = ({ searchQuery }) => {
 
           <FiFilter
             className="absolute right-3 top-1/2 -translate-y-1/2
-            text-gray-600 pointer-events-none"
+      text-gray-600 pointer-events-none"
             size={16}
           />
         </div>
+
+        {/* DOWNLOAD CSV BUTTON */}
+        <button
+          onClick={handleCSVDownload}
+          className="px-4 py-2 rounded-lg bg-[#A9FF67]
+    text-black text-sm font-semibold
+    hover:bg-[#8fe34f] transition"
+        >
+          Download CSV
+        </button>
       </div>
+
 
       <div className="p-2 sm:py-2 max-w-8xl mx-auto border rounded-lg shadow-xl">
 

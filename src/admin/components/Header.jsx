@@ -34,7 +34,8 @@ const Header = ({ setSearchQuery }) => {
 
   return (
     <>
-      <header className="bg-[#2D461D] p-4 border-b border-gray-300">
+      <header className="bg-[#2D461D] p-4 border-b border-gray-300 
+                   fixed top-0 left-0 w-full z-50">
         <div className="flex items-center justify-between">
           <div className="lg:ml-14 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <ul className="flex gap-6 font-bold">
@@ -99,7 +100,10 @@ const Header = ({ setSearchQuery }) => {
           </div>
         </div>
       </header>
-      <Outlet />
+      <div className="pt-20">
+        <Outlet />
+      </div>
+
     </>
   );
 };
